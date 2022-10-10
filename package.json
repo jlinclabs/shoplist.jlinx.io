@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "type": "module",
   "description": "",
-  "main": "index.js",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,7 +24,7 @@
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.7",
     "@prisma/client": "^4.3.1",
-    "app-shared": "github:jlinclabs/app-shared#227df01b5b078991ca247690bee8fe745f6a72a5",
+    "app-shared": "github:jlinclabs/app-shared#4a9851d29425b2eee463af4b48250cc1909182c6",
     "dotenv": "^16.0.2",
     "dotenv-cli": "^6.0.0",
     "parcel": "^2.7.0",
