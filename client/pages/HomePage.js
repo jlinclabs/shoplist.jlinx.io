@@ -1,8 +1,8 @@
-import Box from 'npm:@mui/material/Box'
-import Paper from 'npm:@mui/material/Paper'
-import Typography from 'npm:@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
 
-import InspectObject from 'app-shared/client/components/InspectObject'
+import InspectObject from '../shared/components/InspectObject'
 // import { useCurrentAgent } from '../resources/auth'
 // import LinkToDid from '../components/LinkToDid'
 // import CopyButton from '../components/CopyButton'

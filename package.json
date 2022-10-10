@@ -25,7 +25,7 @@
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.7",
     "@prisma/client": "^4.3.1",
-    "app-shared": "github:jlinclabs/app-shared#3d68048c299558b92fda7249e763cb16e816acc9",
+    "app-shared": "github:jlinclabs/app-shared#227df01b5b078991ca247690bee8fe745f6a72a5",
     "dotenv": "^16.0.2",
     "dotenv-cli": "^6.0.0",
     "parcel": "^2.7.0",
@@ -37,5 +37,8 @@
     "react-router": "^6.4.1",
     "react-router-dom": "^6.4.1",
     "swr": "^1.3.0"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
   }
 }

@@ -77,3 +77,4 @@ artifacts
 /apps/*/tmp/*
 /apps/*/client-build
 .parcel-cache
+client-build
