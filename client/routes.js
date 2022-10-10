@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { Routes as _Routes, Route } from 'react-router-dom'
 
 import HomePage from './pages/HomePage'
