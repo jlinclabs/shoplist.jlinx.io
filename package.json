@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/jlinclabs/app-boilerplate#readme",
   "dependencies": {
-    "app-shared": "github:jlinclabs/app-shared#be3f6b3a7ce6eb2f9813061ea9a56afd94e68af3"
+    "app-shared": "github:jlinclabs/app-shared#70e9522f71249c5e7d633973bf2929f9099469c6"
   }
 }
