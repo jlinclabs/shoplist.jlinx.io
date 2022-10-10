@@ -20,12 +20,12 @@
   },
   "homepage": "https://github.com/jlinclabs/app-boilerplate#readme",
   "dependencies": {
-    "app-shared": "github:jlinclabs/app-shared#441668c1d34fd7cf72ad7e01fbd94e4c9373e8be",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.7",
     "@prisma/client": "^4.3.1",
+    "app-shared": "github:jlinclabs/app-shared#3d68048c299558b92fda7249e763cb16e816acc9",
     "dotenv": "^16.0.2",
     "dotenv-cli": "^6.0.0",
     "parcel": "^2.7.0",
