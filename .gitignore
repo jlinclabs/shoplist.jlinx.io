@@ -76,3 +76,4 @@ artifacts
 /apps/*/uploads
 /apps/*/tmp/*
 /apps/*/client-build
+.parcel-cache
