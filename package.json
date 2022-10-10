@@ -5,7 +5,10 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev-db-migrate": "npx app-shared dev-db-migrate",
+    "dev-start": "npx app-shared dev-start",
+    "build": "npx app-shared build",
+    "start": "npx app-shared start"
   },
   "repository": {
     "type": "git",
