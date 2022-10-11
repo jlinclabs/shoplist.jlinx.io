@@ -4,22 +4,29 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { useCurrentUser } from 'app-shared/client/hooks/auth'
 import AppError from 'app-shared/client/components/AppError'
 import AuthPage from 'app-shared/client/pages/AuthPage'
+import DebugPage from 'app-shared/client/pages/DebugPage'
+import NotFoundPage from 'app-shared/client/pages/NotFoundPage'
 import HomePage from './pages/HomePage'
+import ListsPage from './pages/ListsPage'
 
-export default function Routes({ children }){
+export default function Routes(){
   const { currentUser, loading, error } = useCurrentUser()
   if (loading) return <CircularProgress/>
   if (error) return <AppError {...{error}}/>
-  if (currentUser) return <_Routes>
-    <Route path="*" element={<AuthPage />} />
-  </_Routes>
-  const props = {
-    currentUser,
-  }
+  const props = { currentUser }
   return <_Routes>
-    <Route path="/" element={<HomePage {...props}/>} />
-    <Route path="/login" element={<div>login page</div>} />
-    {children}
+    <Route path="/debug/*" element={<DebugPage {...{...props, appName: 'ShopList'}}/>}/>
+    <Route path="*" element={<AuthPage {...props}/>} />
+    {currentUser
+      // logged in routes
+      ? <>
+        <Route path="/" element={<HomePage {...props}/>} />,
+        <Route path="/lists/*" element={<ListsPage {...props}/>} />,
+      </>
+      // logged out routes
+      : <></>
+    }
+    <Route path="*" element={<NotFoundPage {...props}/>}/>
   </_Routes>
 }
 
