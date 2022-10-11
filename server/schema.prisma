@@ -15,6 +15,7 @@ model User {
   passwordSalt String?
   passwordHash String?
   sessions     Session[]
+  lists        List[]
 }
 
 model Session {
@@ -23,4 +24,11 @@ model Session {
   lastSeenAt DateTime @default(now())
   user       User?    @relation(fields: [userId], references: [id])
   userId     Int?
+}
+
+model List {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
 }
