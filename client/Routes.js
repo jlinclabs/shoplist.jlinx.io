@@ -6,6 +6,7 @@ import AppError from 'app-shared/client/components/AppError'
 import AuthPage from 'app-shared/client/pages/AuthPage'
 import DebugPage from 'app-shared/client/pages/DebugPage'
 import NotFoundPage from 'app-shared/client/pages/NotFoundPage'
+import Layout from './Layout'
 import HomePage from './pages/HomePage'
 import ListsPage from './pages/ListsPage'
 
@@ -14,19 +15,21 @@ export default function Routes(){
   if (loading) return <CircularProgress/>
   if (error) return <AppError {...{error}}/>
   const props = { currentUser }
-  return <_Routes>
-    <Route path="/debug/*" element={<DebugPage {...{...props, appName: 'ShopList'}}/>}/>
-    <Route path="*" element={<AuthPage {...props}/>} />
-    {currentUser
-      // logged in routes
-      ? <>
-        <Route path="/" element={<HomePage {...props}/>} />,
-        <Route path="/lists/*" element={<ListsPage {...props}/>} />,
-      </>
-      // logged out routes
-      : <></>
-    }
-    <Route path="*" element={<NotFoundPage {...props}/>}/>
-  </_Routes>
+  return <Layout {...{...props, loading, error}}>
+    <_Routes>
+      <Route path="/debug/*" element={<DebugPage {...{...props, appName: 'ShopList'}}/>}/>
+      <Route path="*" element={<AuthPage {...props}/>} />
+      {currentUser
+        // logged in routes
+        ? <>
+          <Route path="/" element={<HomePage {...props}/>} />,
+          <Route path="/lists/*" element={<ListsPage {...props}/>} />,
+        </>
+        // logged out routes
+        : <></>
+      }
+      <Route path="*" element={<NotFoundPage {...props}/>}/>
+    </_Routes>
+  </Layout>
 }
 
