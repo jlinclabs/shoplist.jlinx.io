@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 
 import Link from 'app-shared/client/components/Link'
+import { useLogout } from 'app-shared/client/hooks/auth'
 
 const pages = [
   {
@@ -29,8 +30,11 @@ console.log({ pages })
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 export default function TopNav(){
+  const _logout = useLogout()
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
+
+  const logout = () => { _logout.call() }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -165,11 +169,19 @@ export default function TopNav(){
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem
+                component={Link}
+                to="/settings"
+                onClick={handleCloseUserMenu}
+              >
+                <Typography textAlign="center">Settings</Typography>
+              </MenuItem>
+              <MenuItem
+                component={Link}
+                onClick={() => { logout(); handleCloseUserMenu() }}
+              >
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

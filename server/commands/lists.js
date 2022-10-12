@@ -1,12 +1,12 @@
-import prisma from 'app-shared/server/prisma.js'
-
-export async function create(){
-  prisma.list.create({
+export async function create({}, context){
+  return await context.prisma.list.create({
     data: {
-
+      userId: context.userId,
     },
     select: {
-
+      id: true,
+      createdAt: true,
+      userId: true,
     }
   })
 }
