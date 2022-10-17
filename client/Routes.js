@@ -18,7 +18,7 @@ export default function Routes(){
   return <Layout {...{...props, loading, error}}>
     <_Routes>
       <Route path="/debug/*" element={<DebugPage {...{...props, appName: 'ShopList'}}/>}/>
-      <Route path="*" element={<AuthPage {...props}/>} />
+      {AuthPage.routes(props)}
       {currentUser
         // logged in routes
         ? <>
