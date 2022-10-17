@@ -2,14 +2,15 @@ import { createTheme } from '@mui/material/styles'
 import darkScrollbar from "@mui/material/darkScrollbar"
 import * as colors from '@mui/material/colors'
 
+console.log(colors)
 export default createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: colors.blue[500],
+      main: colors.green[500],
     },
     secondary: {
-      main: colors.green[500],
+      main: colors.teal[500],
     },
   },
   components: {

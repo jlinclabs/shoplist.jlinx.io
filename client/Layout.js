@@ -1,6 +1,9 @@
 import * as React from 'react'
 import { useLocation } from 'react-router-dom'
 import { useMemo } from 'react'
+import AppError from 'app-shared/client/components/AppError'
+
+import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -28,6 +31,8 @@ import TopNav from './TopNav'
 
 export default function Layout({ currentUser, loading, error, children }) {
   const location = useLocation()
+  if (loading) return <CircularProgress/>
+  if (error) return <AppError {...{error}}/>
   return (
     <Container maxWidth={false} disableGutters>
       <Box sx={{
@@ -50,147 +55,147 @@ export default function Layout({ currentUser, loading, error, children }) {
   )
 }
 
-
-function SideNav({ loading, currentUser }) {
-  const navButtons = (
-    loading ? (
-      Array(3).fill().map((_, i) =>
-        <Skeleton key={i} animation="wave" height="100px" />
-      )
-    ) :
-    currentUser ? <>
-      {/* <NavButton {...{
-        icon: <AccountBoxOutlinedIcon/>,
-        text: 'Identifiers',
-        to: '/identifiers',
-      }}/>
-      <NavButton {...{
-        icon: <PersonIcon/>,
-        text: 'Profiles',
-        to: '/profiles',
-      }}/>
-      <NavButton {...{
-        icon: <ArticleOutlinedIcon/>,
-        text: 'Contracts',
-        to: '/contracts',
-      }}/> */}
-      <NavButton {...{
-        icon: <FingerprintIcon/>,
-        text: 'Identity',
-        to: '/id',
-      }}/>
-      {/* <NavButton {...{
-        icon: <FingerprintIcon/>,
-        text: 'Idenitity / Auth',
-        to: '/auth',
-      }}/> */}
-      <NavButton {...{
-        icon: <ContactPageIcon/>,
-        text: 'Contacts',
-        to: '/contacts',
-      }}/>
-      <NavButton {...{
-        icon: <AssignmentTurnedInIcon/>,
-        text: 'Agreements',
-        to: '/agreements',
-      }}/>
-      <NavButton {...{
-        icon: <DriveFileMoveIcon/>,
-        text: 'Data Sharing',
-        to: '/data-sharing',
-      }}/>
-      <NavButton {...{
-        icon: <FingerprintIcon/>,
-        text: 'DIDs',
-        to: '/dids',
-      }}/>
-
-      <Box sx={{ flex: '1 1'}}/>
-      <Divider />
-      <NavButton {...{
-        icon: <LockIcon/>,
-        text: 'Vault',
-        to: '/vault',
-      }}/>
-      <ListItem disablePadding>
-        <ListItemButton component={Link} to="/settings">
-          <ListItemText {...{
-            primary: (
-              `${currentUser.email}`
-            ),
-            primaryTypographyProps: {
-              sx: {
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }
-            }
-          }}/>
-        </ListItemButton>
-      </ListItem>
-      <NavButton {...{
-        icon: <LogoutOutlinedIcon/>,
-        text: 'Logout',
-        to: '/logout',
-      }}/>
-    </> :
-    <>
-      <NavButton {...{
-        icon: <HomeIcon/>,
-        text: 'Home',
-        to: '/',
-      }}/>
-    </>
-  )
-  return <Box sx={{
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: 'primary.dark',
-    minWidth: `max(10vw, 175px)`,
-    maxWidth: `max(20vw, 400px)`,
-    overflowX: 'auto',
-  }}>
-    <Link
-      underline="none"
-      variant="h6"
-      to="/"
-      sx={{
-        mt: 3,
-        mb: 1,
-        textAlign: 'center',
-        color: 'inherit',
-      }}
-    >
-      Shop List
-    </Link>
-
-    <List sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      flex: '1 1',
-      padding: '0',
-    }}>{navButtons}</List>
-  </Box>
-}
-
-function NavButton({ text, to, icon }){
-  return <ListItem key={text} disablePadding>
-    <ListItemButton component={Link} to={to}>
-      <ListItemIcon sx={{minWidth: '30px'}}>
-        {icon}
-      </ListItemIcon>
-      <ListItemText primary={text} />
-    </ListItemButton>
-  </ListItem>
-}
-
-function ShortDid({ did }){
-  const shortDid = useMemo(
-    () => `${did.slice(0, 10)}…${did.slice(-6)}`,
-    [did]
-  )
-  return <Box sx={{
-    maxWidth: '140px',
-    textOverflow: 'ellipsis',
-    overflow: 'scroll',
-  }}>{shortDid}</Box>
-}
+//
+// function SideNav({ loading, currentUser }) {
+//   const navButtons = (
+//     loading ? (
+//       Array(3).fill().map((_, i) =>
+//         <Skeleton key={i} animation="wave" height="100px" />
+//       )
+//     ) :
+//     currentUser ? <>
+//       {/* <NavButton {...{
+//         icon: <AccountBoxOutlinedIcon/>,
+//         text: 'Identifiers',
+//         to: '/identifiers',
+//       }}/>
+//       <NavButton {...{
+//         icon: <PersonIcon/>,
+//         text: 'Profiles',
+//         to: '/profiles',
+//       }}/>
+//       <NavButton {...{
+//         icon: <ArticleOutlinedIcon/>,
+//         text: 'Contracts',
+//         to: '/contracts',
+//       }}/> */}
+//       <NavButton {...{
+//         icon: <FingerprintIcon/>,
+//         text: 'Identity',
+//         to: '/id',
+//       }}/>
+//       {/* <NavButton {...{
+//         icon: <FingerprintIcon/>,
+//         text: 'Idenitity / Auth',
+//         to: '/auth',
+//       }}/> */}
+//       <NavButton {...{
+//         icon: <ContactPageIcon/>,
+//         text: 'Contacts',
+//         to: '/contacts',
+//       }}/>
+//       <NavButton {...{
+//         icon: <AssignmentTurnedInIcon/>,
+//         text: 'Agreements',
+//         to: '/agreements',
+//       }}/>
+//       <NavButton {...{
+//         icon: <DriveFileMoveIcon/>,
+//         text: 'Data Sharing',
+//         to: '/data-sharing',
+//       }}/>
+//       <NavButton {...{
+//         icon: <FingerprintIcon/>,
+//         text: 'DIDs',
+//         to: '/dids',
+//       }}/>
+//
+//       <Box sx={{ flex: '1 1'}}/>
+//       <Divider />
+//       <NavButton {...{
+//         icon: <LockIcon/>,
+//         text: 'Vault',
+//         to: '/vault',
+//       }}/>
+//       <ListItem disablePadding>
+//         <ListItemButton component={Link} to="/settings">
+//           <ListItemText {...{
+//             primary: (
+//               `${currentUser.email}`
+//             ),
+//             primaryTypographyProps: {
+//               sx: {
+//                 overflow: 'hidden',
+//                 textOverflow: 'ellipsis',
+//               }
+//             }
+//           }}/>
+//         </ListItemButton>
+//       </ListItem>
+//       <NavButton {...{
+//         icon: <LogoutOutlinedIcon/>,
+//         text: 'Logout',
+//         to: '/logout',
+//       }}/>
+//     </> :
+//     <>
+//       <NavButton {...{
+//         icon: <HomeIcon/>,
+//         text: 'Home',
+//         to: '/',
+//       }}/>
+//     </>
+//   )
+//   return <Box sx={{
+//     display: 'flex',
+//     flexDirection: 'column',
+//     backgroundColor: 'primary.dark',
+//     minWidth: `max(10vw, 175px)`,
+//     maxWidth: `max(20vw, 400px)`,
+//     overflowX: 'auto',
+//   }}>
+//     <Link
+//       underline="none"
+//       variant="h6"
+//       to="/"
+//       sx={{
+//         mt: 3,
+//         mb: 1,
+//         textAlign: 'center',
+//         color: 'inherit',
+//       }}
+//     >
+//       Shop List
+//     </Link>
+//
+//     <List sx={{
+//       display: 'flex',
+//       flexDirection: 'column',
+//       flex: '1 1',
+//       padding: '0',
+//     }}>{navButtons}</List>
+//   </Box>
+// }
+//
+// function NavButton({ text, to, icon }){
+//   return <ListItem key={text} disablePadding>
+//     <ListItemButton component={Link} to={to}>
+//       <ListItemIcon sx={{minWidth: '30px'}}>
+//         {icon}
+//       </ListItemIcon>
+//       <ListItemText primary={text} />
+//     </ListItemButton>
+//   </ListItem>
+// }
+//
+// function ShortDid({ did }){
+//   const shortDid = useMemo(
+//     () => `${did.slice(0, 10)}…${did.slice(-6)}`,
+//     [did]
+//   )
+//   return <Box sx={{
+//     maxWidth: '140px',
+//     textOverflow: 'ellipsis',
+//     overflow: 'scroll',
+//   }}>{shortDid}</Box>
+// }
