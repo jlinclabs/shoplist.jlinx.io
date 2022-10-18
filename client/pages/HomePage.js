@@ -12,6 +12,8 @@ import InspectObject from 'app-shared/client/components/InspectObject'
 import LogoutButton from 'app-shared/client/components/LogoutButton'
 import ButtonRow from 'app-shared/client/components/ButtonRow'
 
+import AppLogo from '../components/AppLogo'
+
 export default function HomePage(props) {
   return h(props.currentUser ? LoggedIn : LoggedOut, props)
 }
@@ -19,7 +21,11 @@ export default function HomePage(props) {
 function LoggedOut(){
   return <Stack p={2} direction="column" spacing={2} alignItems="center">
     <Paper sx={{p:2, minWidth: '50vw', maxWidth: '600px'}}>
-      <Typography variant="h4" align="center">Welcome to Shop List!</Typography>
+      <Typography variant="h4" align="center">
+        Welcome to
+        <AppLogo sx={{ml: 1}}/>
+        Shop List!
+      </Typography>
       {[
         `Shop List is a demo app that lets you manage one or more shopping list.`,
         `Shop List helps demonstrate how apps can use data owned by the user by ` +
@@ -30,7 +36,7 @@ function LoggedOut(){
       <Button
         variant="contained"
         component={Link}
-        to="/signup"
+        to="/auth"
       >Signup and own your data</Button>
     </Box>
   </Stack>
@@ -38,7 +44,7 @@ function LoggedOut(){
 
 function LoggedIn({ currentUser }){
   return <Container>
-    <Typography variant="h4">Welcome back {currentUser.email}</Typography>
+    <Typography variant="h4">Welcome {currentUser.email}</Typography>
   </Container>
 }
 

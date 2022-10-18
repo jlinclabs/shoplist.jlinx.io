@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
-import AdbIcon from '@mui/icons-material/Adb'
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd'
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -25,7 +25,7 @@ export default function TopNav({ currentUser }){
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <FormatListBulletedIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap

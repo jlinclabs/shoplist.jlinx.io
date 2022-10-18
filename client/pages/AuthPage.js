@@ -65,7 +65,10 @@ function AuthForm({ currentUser }) {
         variant="contained"
         size="large"
         fullWidth
-      >Login or Signup</Button>
+      >{login.pending
+        ? 'WORKING ON IT…'
+        : 'EMAIL ME A LOGIN LINK'
+      }</Button>
     </Paper>
   </Stack>
 }
