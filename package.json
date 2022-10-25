@@ -27,7 +27,7 @@
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.9",
     "@prisma/client": "^4.3.1",
-    "app-shared": "github:jlinclabs/app-shared#cebf1927d98776cca52e77ebd6eef121a0b23c76",
+    "app-shared": "github:jlinclabs/app-shared#eb2a0809e2d6c854ea3ca28ac0a12abe8bf27ef0",
     "dotenv": "^16.0.2",
     "dotenv-cli": "^6.0.0",
     "parcel": "^2.7.0",
