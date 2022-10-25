@@ -1,7 +1,10 @@
 import { Routes as _Routes, Route } from 'react-router-dom'
 
 import { useCurrentUser } from 'app-shared/client/hooks/auth'
-// import { RedirectToLoginDestination } from 'app-shared/client/pages/AuthPage'
+
+import AppError from 'app-shared/client/components/AppError'
+import Loading from './components/Loading'
+
 import DebugPage from 'app-shared/client/pages/DebugPage'
 import NotFoundPage from 'app-shared/client/pages/NotFoundPage'
 import RedirectPage from 'app-shared/client/pages/RedirectPage'
@@ -11,8 +14,12 @@ import AboutPage from './pages/AboutPage'
 import AuthPage from './pages/AuthPage'
 import ListsPage from './pages/ListsPage'
 
+
 export default function Routes(){
   const { currentUser, loading, error } = useCurrentUser()
+  if (loading) return <Loading variant="fullPage"/>
+  return <Loading variant="fullPage"/>
+  if (error) return <AppError {...{error}}/>
   const props = { currentUser }
   return <Layout {...{...props, loading, error}}>
     <_Routes>
@@ -23,16 +30,11 @@ export default function Routes(){
       {currentUser
         // logged in
         ? <>
-          {/*<Route path="/login" element={<RedirectToLoginDestination/>} />*/}
-          {/*<Route path="/signup" element={<RedirectToLoginDestination/>} />*/}
           <Route path="/lists/*" element={<ListsPage {...props}/>} />
           <Route path="*" element={<NotFoundPage {...props}/>}/>
         </>
         // not logged in
         : <>
-          {/*<Route path="/login" element={<RedirectToLoginDestination/>} />*/}
-          {/*<Route path="/signup" element={<RedirectToLoginDestination/>} />*/}
-          {/*<Route path="/reset-password" element={<RedirectToLoginDestination/>} />*/}
           <Route path="*" element={<RedirectToAuthPage/>} />
         </>
       }

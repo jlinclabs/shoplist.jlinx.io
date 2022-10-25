@@ -12,7 +12,7 @@ import InspectObject from 'app-shared/client/components/InspectObject'
 import LogoutButton from 'app-shared/client/components/LogoutButton'
 import ButtonRow from 'app-shared/client/components/ButtonRow'
 
-import AppLogo from '../components/AppLogo'
+import AppLogo from '../components/LogoIcon.js'
 
 export default function HomePage(props) {
   return h(props.currentUser ? LoggedIn : LoggedOut, props)
