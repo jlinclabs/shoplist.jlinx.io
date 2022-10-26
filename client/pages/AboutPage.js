@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 
-import AppLogo from '../components/LogoIcon.js'
+import AppLogo from '../components/AppLogo.js'
 
 export default function AboutPage(props) {
   return <Stack p={2} direction="column" spacing={2} alignItems="center">

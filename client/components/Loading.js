@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
-import LogoIcon from './LogoIcon.js'
+import LogoIcon from './AppLogo.js'
 
 export default function FullPageLoading(props){
   if (props.variant === 'fullPage') return (

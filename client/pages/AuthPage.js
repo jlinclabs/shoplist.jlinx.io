@@ -14,11 +14,18 @@ import ErrorMessage from 'app-shared/client/components/ErrorMessage'
 import Form from 'app-shared/client/components/Form'
 import RedirectPage from 'app-shared/client/pages/RedirectPage'
 
+// import { isAgentEmail } from '../../../shared/agents.js'
+
+
 export default function AuthPage(props) {
   const [search] = useSearchParams()
   if (props.currentUser) return <RedirectPage to={search.get('d') || "/"}/>
   return <AuthForm {...props}/>
 }
+
+// const isJlinxAgentEmail = email =>
+//   /[a-zA-Z0-9-_/=+]{64}@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
+//
 
 function AuthForm({ currentUser }) {
   const [email, setEmail] = useState('')
@@ -27,6 +34,7 @@ function AuthForm({ currentUser }) {
   const submittable = !!(email && isEmail(email))
   const disabled = !!login.pending
 
+  const emailIsJlinxAgent = isJlinxAgentEmail(email)
   const onSubmit = () => {
     login.call({
       email: email || undefined,

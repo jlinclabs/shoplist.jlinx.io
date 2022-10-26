@@ -18,7 +18,7 @@ import ListsPage from './pages/ListsPage'
 export default function Routes(){
   const { currentUser, loading, error } = useCurrentUser()
   if (loading) return <Loading variant="fullPage"/>
-  return <Loading variant="fullPage"/>
+   return <Loading variant="fullPage"/>
   if (error) return <AppError {...{error}}/>
   const props = { currentUser }
   return <Layout {...{...props, loading, error}}>
