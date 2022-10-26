@@ -6,6 +6,8 @@ import AppError from 'app-shared/client/components/AppError'
 import Loading from './components/Loading'
 
 import DebugPage from 'app-shared/client/pages/DebugPage'
+// import StyleguidePage from 'app-shared/client/pages/StyleguidePage'
+import StyleguidePage from './pages/StyleguidePage' // MOVE to app-shared
 import NotFoundPage from 'app-shared/client/pages/NotFoundPage'
 import RedirectPage from 'app-shared/client/pages/RedirectPage'
 import Layout from './Layout'
@@ -13,7 +15,6 @@ import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import AuthPage from './pages/AuthPage'
 import ListsPage from './pages/ListsPage'
-
 
 export default function Routes(){
   const { currentUser, loading, error } = useCurrentUser()
@@ -23,6 +24,7 @@ export default function Routes(){
   return <Layout {...{...props, loading, error}}>
     <_Routes>
       <Route path="/debug/*" element={<DebugPage {...{...props, appName: 'ShopList'}}/>}/>
+      <Route path="/styleguide/*" element={<StyleguidePage {...{...props, appName: 'ShopList'}}/>}/>
       <Route path="/" element={<HomePage {...props}/>} />
       <Route path="/auth/*" element={<AuthPage {...props}/>} />
       <Route path="/about" element={<AboutPage {...props}/>} />
