@@ -13,6 +13,7 @@ export default function AppLogo({
     ...props,
     dangerouslySetInnerHTML: { __html: appLogo },
     sx: {
+      display: 'inline-block',
       width: 100,
       ...props?.sx,
       '--color': color,

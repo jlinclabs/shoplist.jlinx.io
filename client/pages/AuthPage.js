@@ -43,17 +43,16 @@ function AuthForm({ currentUser }) {
   }
   return <Stack p={2} direction="column" spacing={2} alignItems="center">
     <Paper {...{
+      component: Form,
+      onSubmit,
+      disabled: !submittable,
       sx: {
         p: 2,
         minWidth: `min(100vw, 500px)`,
       }
     }}>
       <Typography variant="h4" mb={2} align="center">Signup or Login</Typography>
-      <Box {...{
-        component: Form,
-        disabled: !submittable,
-        onSubmit,
-      }}>
+      <Box>
         <ErrorMessage error={login.error}/>
         <TextField
           autoFocus

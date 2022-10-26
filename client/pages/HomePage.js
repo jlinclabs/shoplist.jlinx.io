@@ -23,7 +23,7 @@ function LoggedOut(){
     <Paper sx={{p:2, minWidth: '50vw', maxWidth: '600px'}}>
       <Typography variant="h4" align="center">
         Welcome to
-        <AppLogo sx={{ml: 1}}/>
+        <div><AppLogo sx={{m2: 2}}/></div>
         Shop List!
       </Typography>
       {[
