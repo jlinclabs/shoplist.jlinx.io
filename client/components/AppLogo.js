@@ -1,11 +1,8 @@
+import { useRef, useLayoutEffect } from 'react'
 import * as colors from '@mui/material/colors'
 import Box from '@mui/material/Box'
-// import logo from '../media/logo.svg'
 
-// import appLogoPath from 'raw:./AppLogo.path.txt'
-// console.log({ appLogoPath })
-import appLogo from './AppLogo.svg'
-console.log({ appLogo })
+import appLogo from 'bundle-text:./AppLogo.svg'
 
 export default function AppLogo({
   size,
@@ -14,6 +11,7 @@ export default function AppLogo({
 }) {
   return <Box {...{
     ...props,
+    dangerouslySetInnerHTML: { __html: appLogo },
     sx: {
       width: 100,
       ...props?.sx,
@@ -22,26 +20,5 @@ export default function AppLogo({
         fill: 'var(--color)',
       }
     }
-  }}>
-    <img src={appLogo}/>
-    {/*<svg x="0px" y="0px" viewBox="0 0 1000 1000" enableBackground="new 0 0 1000 1000">*/}
-    {/*  <g>*/}
-    {/*    <path d={appLogoPath}/>*/}
-    {/*  </g>*/}
-    {/*</svg>*/}
-  </Box>
-  // return <Box {...{
-  //   component: 'img',
-  //   src: logo,
-  //   ...props,
-  //   sx: {
-  //     width: 100,
-  //     ...props?.sx,
-  //     'svg path': {
-  //       fill: 'red',
-  //     }
-  //   }
-  // }}/>
+  }}/>
 }
-
-// d="M814.4,219.7h-86.1C722.5,102.9,625.9,10,507.6,10c-118.3,0-214.9,92.9-220.8,209.7h-96L101.6,990h796.9L814.4,219.7L814.4,219.7z M328.2,328c0-15.5,12.6-28.1,28.1-28.1c15.5,0,28.1,12.6,28.1,28.1c0,15.5-12.6,28.1-28.1,28.1C340.8,356.1,328.2,343.5,328.2,328L328.2,328z M583.7,784.5l-86.1-45.3l-86.1,45.3l16.4-95.8l-69.6-67.9l96.2-14l43-87.2l43,87.2l96.2,14l-69.6,67.9L583.7,784.5L583.7,784.5z M631.5,356.1c-15.5,0-28.1-12.6-28.1-28.1c0-15.5,12.6-28.1,28.1-28.1c15.5,0,28.1,12.6,28.1,28.1C659.7,343.5,647.1,356.1,631.5,356.1L631.5,356.1z M348,219.7c6.1-82,74.5-146.6,158-146.6c83.5,0,151.9,64.6,158,146.6H348L348,219.7z"/></g>

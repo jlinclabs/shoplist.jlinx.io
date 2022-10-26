@@ -23,9 +23,10 @@ export default function AuthPage(props) {
   return <AuthForm {...props}/>
 }
 
-// const isJlinxAgentEmail = email =>
-//   /[a-zA-Z0-9-_/=+]{64}@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
-//
+const isJlinxAgentEmail = email =>
+  /^[a-zA-Z0-9_-]{32,64}@.+/.test(email)
+  // /[a-zA-Z0-9-_/=+]{64}@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
+
 
 function AuthForm({ currentUser }) {
   const [email, setEmail] = useState('')
@@ -73,9 +74,20 @@ function AuthForm({ currentUser }) {
         variant="contained"
         size="large"
         fullWidth
-      >{login.pending
-        ? 'WORKING ON IT…'
-        : 'EMAIL ME A LOGIN LINK'
+        sx={{
+          backgroundColor: (
+            emailIsJlinxAgent
+              ? 'info.dark'
+              : 'success.main'
+          ),
+        }}
+      >{
+        login.pending
+          ? 'WORKING ON IT…'
+          : (emailIsJlinxAgent
+            ? 'LOGIN WITH YOU JLINC AGENT'
+            : 'EMAIL ME A LOGIN LINK'
+          )
       }</Button>
     </Paper>
   </Stack>
