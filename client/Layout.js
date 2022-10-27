@@ -27,7 +27,7 @@ import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn'
 import Link from 'app-shared/client/components/Link'
 import ErrorBoundary from 'app-shared/client/components/ErrorBoundary'
 // import AppError from 'app-shared/client/components/AppError'
-import TopNav from './TopNav'
+import TopNav from './components/TopNav.js'
 
 export default function Layout({ currentUser, loading, error, children }) {
   const location = useLocation()

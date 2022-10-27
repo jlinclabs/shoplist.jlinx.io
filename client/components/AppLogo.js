@@ -4,8 +4,14 @@ import Box from '@mui/material/Box'
 
 import appLogo from 'bundle-text:./AppLogo.svg'
 
+const SIZES = {
+  small: 20,
+  medium: 40,
+  large: 100,
+  xLarge: 150,
+}
 export default function AppLogo({
-  size,
+  size = 'medium',
   color = colors.green[500],
   ...props
 }) {
@@ -14,7 +20,7 @@ export default function AppLogo({
     dangerouslySetInnerHTML: { __html: appLogo },
     sx: {
       display: 'inline-block',
-      width: 100,
+      width: SIZES[size],
       ...props?.sx,
       '--color': color,
       'svg path': {

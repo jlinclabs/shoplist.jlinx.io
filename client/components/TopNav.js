@@ -18,6 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useLogout } from 'app-shared/client/hooks/auth'
 import Link from 'app-shared/client/components/Link'
 import InspectObject from 'app-shared/client/components/InspectObject'
+import AppLogo from './AppLogo'
 
 
 export default function TopNav({ currentUser }){
@@ -25,7 +26,12 @@ export default function TopNav({ currentUser }){
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <FormatListBulletedIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <AppLogo
+            size="medium"
+            mr={1}
+            component={Link}
+            to="/"
+          />
           <Typography
             variant="h6"
             noWrap
@@ -33,7 +39,8 @@ export default function TopNav({ currentUser }){
             to="/"
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
+              // display: { xs: 'none', md: 'flex' },
+              display: 'flex',
               // fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
