@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 import * as auth from 'app-shared/server/commands/auth.js'
 export * from 'app-shared/server/commands/auth.js'
-import { isEmail } from 'app-shared/validators.js'
+import { isEmail } from 'app-shared/shared/emails.js'
 import { InvalidArgumentError } from 'app-shared/server/errors.js'
 
 export async function login({ email }, context){

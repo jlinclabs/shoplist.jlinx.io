@@ -9,7 +9,7 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import CircularProgress from '@mui/material/CircularProgress'
 
-import { isEmail } from 'app-shared/validators'
+import { isEmail } from 'app-shared/shared/validators'
 import { useQuery, useCommand, useCommandOnMount } from 'app-shared/client/hooks/cqrpc.js'
 import { useLogin } from 'app-shared/client/hooks/auth'
 import ErrorMessage from 'app-shared/client/components/ErrorMessage'
