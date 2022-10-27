@@ -24,6 +24,19 @@ export async function loginViaAgent({ email }, context){
   console.log({ email, domain, encodedPublicKey })
   // TODO: const publicKey = decodeKey(encodedPublicKey)
 
+
+  /*
+  *
+  * 1. extract public key and domain from email
+  * 2. POST to domain assuming jlinx API
+  * NOTE: all posts from here to jlinx agent host domain are
+  *   - signed by this app's public key
+  *   - encrypted toward user's agent's public key
+  * 3.
+  *
+  *
+  * */
+
   const res = await fetch(`https://${domain}/api/jlinx/v1/login`, {
     method: 'POST',
     headers: {

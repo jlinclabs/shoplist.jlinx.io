@@ -11,6 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 import { isEmail } from 'app-shared/shared/emails'
 import { useQuery, useCommand, useCommandOnMount } from 'app-shared/client/hooks/cqrpc.js'
+import InspectObject from 'app-shared/client/components/InspectObject'
 import { useLogin } from 'app-shared/client/hooks/auth'
 import ErrorMessage from 'app-shared/client/components/ErrorMessage'
 import Form from 'app-shared/client/components/Form'
@@ -135,5 +136,6 @@ function LoginViaAgent({ disabled, email }) {
         <CircularProgress />
       </Box>
     }
+    {loginCmd.resolved && <InspectObject object={loginCmd.result}/>}
   </Form>
 }
