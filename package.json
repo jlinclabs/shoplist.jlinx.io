@@ -33,7 +33,7 @@
     "@parcel/transformer-webmanifest": "^2.7.0",
     "@prisma/client": "^4.5.0",
     "@stablelib/x25519": "^1.0.3",
-    "app-shared": "github:jlinclabs/app-shared#80abac0dacd51fae925f0a3a5570066a92a00ca6",
+    "app-shared": "github:jlinclabs/app-shared#5eb3dbab725e1d9ea566649114ff711257d24c3e",
     "dotenv": "^16.0.3",
     "dotenv-cli": "^6.0.0",
     "multiformats": "^10.0.2",
