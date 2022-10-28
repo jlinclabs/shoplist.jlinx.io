@@ -45,6 +45,7 @@ function AuthForm({ currentUser }) {
     <Paper sx={{
       p: 2,
       minWidth: `min(100vw, 500px)`,
+      maxWidth: `calc(100vw - 20px)`,
     }}>
       {loginViaAgent
         ? <LoginViaAgent {...{disabled, email}}/>

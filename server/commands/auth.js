@@ -3,6 +3,7 @@ import * as auth from 'app-shared/server/commands/auth.js'
 export * from 'app-shared/server/commands/auth.js'
 import { isEmail } from 'app-shared/shared/emails.js'
 import { InvalidArgumentError } from 'app-shared/server/errors.js'
+import jlinx from '../jlinx.js'
 
 export async function login({ email }, context){
   console.log('shoplist signup', { email })
@@ -20,34 +21,10 @@ export async function login({ email }, context){
 
 export async function loginViaAgent({ email }, context){
   validateEmail(email)
-  const [encodedPublicKey, domain] = email.split('@')
-  console.log({ email, domain, encodedPublicKey })
-  // TODO: const publicKey = decodeKey(encodedPublicKey)
+  const enoughToLogin = await jlinx.loginWithAgentEmail(email)
+  console.log({ enoughToLogin })
 
-
-  /*
-  *
-  * 1. extract public key and domain from email
-  * 2. POST to domain assuming jlinx API
-  * NOTE: all posts from here to jlinx agent host domain are
-  *   - signed by this app's public key
-  *   - encrypted toward user's agent's public key
-  * 3.
-  *
-  *
-  * */
-
-  const res = await fetch(`https://${domain}/api/jlinx/v1/login`, {
-    method: 'POST',
-    headers: {
-      'Referer': process.env.APP_ORIGIN,
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    body: JSON.stringify({ email }), // TODO sign the payload wit this agents public key
-  })
-  const resBody = await res.json()
-  return { email, domain, resBody }
+  return { enoughToLogin }
 }
 
 
