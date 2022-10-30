@@ -5,15 +5,16 @@ import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
-import MenuIcon from '@mui/icons-material/Menu'
+import Avatar from '@mui/material/Avatar'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
+import MenuIcon from '@mui/icons-material/Menu'
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd'
-import MenuIcon from '@mui/icons-material/Menu';
+
 
 import { useLogout } from 'app-shared/client/hooks/auth'
 import Link from 'app-shared/client/components/Link'
@@ -109,7 +110,10 @@ function LoggedIn({ currentUser }){
     setAnchorElUser(null)
   }
   return <>
-    <Box>{currentUser.email}</Box>
+    <Stack direction="row" alignItems="center" spacing={2}>
+      <Avatar src={currentUser.avatar} />
+      <Box>{currentUser.displayName}</Box>
+    </Stack>
     <Tooltip title="Open settings">
       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
         <MenuIcon/>

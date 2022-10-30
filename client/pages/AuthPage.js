@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
@@ -7,16 +7,18 @@ import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
+import Avatar from '@mui/material/Avatar'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import { isEmail } from 'app-shared/shared/emails'
 import { useQuery, useCommand, useCommandOnMount } from 'app-shared/client/hooks/cqrpc.js'
-import InspectObject from 'app-shared/client/components/InspectObject'
-import { useLogin } from 'app-shared/client/hooks/auth'
+import { useLogin, useCurrentUser } from 'app-shared/client/hooks/auth'
 import ErrorMessage from 'app-shared/client/components/ErrorMessage'
 import Form from 'app-shared/client/components/Form'
+import Link from 'app-shared/client/components/Link'
 import RedirectPage from 'app-shared/client/pages/RedirectPage'
 import {Circle} from "@mui/icons-material";
+import InspectObject from 'app-shared/client/components/InspectObject'
 
 // import { isAgentEmail } from '../../../shared/agents.js'
 
@@ -112,8 +114,10 @@ function EmailForm({ disabled, email, setEmail, emailIsJlinxAgent, onSubmit, pen
 
 
 function LoginViaAgent({ disabled, email }) {
+  const { reload: reloadCurrentUser } = useCurrentUser()
+  const navigate = useNavigate()
   const host = email.split('@')[1]
-  const loginRequest = useCommandOnMount(`auth.requestLogin`, { email }, {
+  const loginRequest = useCommandOnMount(`auth.requestLoginViaJlinxAgent`, { email }, {
     onSuccess(...args){
       console.log('auth.requestLogin onSuccess', args)
     },
@@ -125,7 +129,7 @@ function LoginViaAgent({ disabled, email }) {
     },
   })
 
-  const waitForResult = useCommand(`auth.waitForLoginRequestResult`, {
+  const waitForResult = useCommand(`auth.waitForLoginRequestViaAgent`, {
     onSuccess(...args){
       console.log('auth.waitForResult onSuccess', args)
     },
@@ -137,37 +141,94 @@ function LoginViaAgent({ disabled, email }) {
     },
   })
 
-  console.log({ loginRequest, waitForResult })
+  const complete = useCommand(`auth.completeLoginViaAgent`, {
+    onSuccess(){
+      reloadCurrentUser()
+      navigate('/')
+    },
+  })
+
+  console.log({ loginRequest, waitForResult, complete })
+
+  const profile = loginRequest.result?.profile
 
   useEffect(
     () => {
-      if (loginRequest.resolved){
-        console.log(loginRequest.result)
-        const id = loginRequest.result.loginAttemptId
+      const id = loginRequest.result?.loginAttemptId
+      if (loginRequest.resolved && waitForResult.idle){
         waitForResult.call({ host, id })
+      }else if (
+        waitForResult.resolved &&
+        waitForResult.result.accepted &&
+        complete.idle
+      ){
+        complete.call({ host, id })
       }
     },
-    [loginRequest.resolved]
+    [
+      loginRequest.state,
+      loginRequest.state,
+      waitForResult.state,
+    ]
   )
   return <Form {...{
     // onSubmit,
     disabled,
   }}>
     <Typography variant="h4" mb={2} align="center">Login via JLINX Agent 🕵</Typography>
-    <ErrorMessage error={loginRequest.error}/>
+    <ErrorMessage error={
+      loginRequest.error ||
+      waitForResult.error ||
+      complete.error
+    }/>
     {loginRequest.pending &&
       <Box align="center">
         <Typography variant="h6" mb={2}>Contacting your agent at {host}</Typography>
         <CircularProgress />
       </Box>
     }
-    {loginRequest.resolved &&
+    {(loginRequest.resolved && !waitForResult.resolved) &&
       <Box align="center">
-        <Typography variant="h6" mb={2}>Go checking your agent!</Typography>
-        <Typography variant="h6" mb={2}>We've sent a login request to your agent at {host}</Typography>
+        <Typography variant="h6" mb={2}>Logging in as:</Typography>
+        <Profile {...{profile}}/>
+        <Typography variant="h6" mb={2}>
+          <span>{`We've sent a login request to your agent at `}</span>
+          <Link target="_blank" to={`https://${host}`}>{host}</Link>
+        </Typography>
+        <Typography variant="h5" mb={2}>Go check your agent!</Typography>
         <CircularProgress />
       </Box>
     }
-    {loginRequest.resolved && <InspectObject object={loginRequest.result}/>}
+    {waitForResult.resolved && !complete.resolved && !complete.rejected && (
+      waitForResult.result.accepted
+        ? <Box align="center">
+          <Typography variant="h5" mb={2}>Logging in as:</Typography>
+          <Profile {...{profile}}/>
+          <CircularProgress />
+        </Box>
+        : <Box align="center">
+          <Typography variant="h5" mb={2}>Logging rejected!</Typography>
+          <Typography variant="h1" mb={2}>:(</Typography>
+        </Box>
+      )
+    }
   </Form>
+}
+
+
+function Profile({ profile }){
+  if (profile) return <Stack
+    mb={2}
+    spacing={2}
+    direction="row"
+    alignItems="center"
+    justifyContent="center"
+  >
+    <Avatar
+      alt={profile.displayName}
+      src={profile.avatar}
+      sx={{width: 56, height: 56}}
+    />
+    <Typography variant="h4">{profile.displayName || '[unknown]'}</Typography>
+  </Stack>
 }

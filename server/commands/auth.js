@@ -18,15 +18,26 @@ export async function login({ email }, context){
   return await context.queries.auth.getCurrentUser()
 }
 
-export async function requestLogin({ email }, context){
+export async function requestLoginViaJlinxAgent({ email }, context){
   validateEmail(email)
   return await jlinxApp.loginWithAgentEmail(email)
 }
 
-export async function waitForLoginRequestResult({ host, id }, context){
+export async function waitForLoginRequestViaAgent({ host, id }, context){
   if (!host) throw new InvalidArgumentError('host', host)
   if (!id) throw new InvalidArgumentError('id', id)
   return await jlinxApp.waitForLoginRequestResult({ host, id })
+}
+
+export async function completeLoginViaAgent({ host, id }, context) {
+  const loginRequest = await jlinxApp.waitForLoginRequestResult({ host, id })
+  console.log({ loginRequest })
+  if (!loginRequest.accepted) throw new Error(`login request not accepted`)
+  await context.commands.auth._createUser({
+    jlinxAgentDid: loginRequest.did,
+    displayName: loginRequest.profile?.displayName,
+    avatar: loginRequest.profile?.avatar,
+  })
 }
 
 

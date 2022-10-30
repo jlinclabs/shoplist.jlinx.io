@@ -43,8 +43,10 @@ function LoggedOut(){
 }
 
 function LoggedIn({ currentUser }){
-  return <Container>
-    <Typography variant="h4">Welcome {currentUser.email}</Typography>
+  return <Container maxWidth="sm">
+    <Paper sx={{p: 2, m: 2}}>
+      <Typography variant="h4">Welcome {currentUser.displayName}</Typography>
+    </Paper>
   </Container>
 }
 
