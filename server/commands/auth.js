@@ -3,7 +3,7 @@ import * as auth from 'app-shared/server/commands/auth.js'
 export * from 'app-shared/server/commands/auth.js'
 import { isEmail } from 'app-shared/shared/emails.js'
 import { InvalidArgumentError } from 'app-shared/server/errors.js'
-import jlinx from '../jlinx.js'
+import jlinxApp from '../jlinxApp.js'
 
 export async function login({ email }, context){
   console.log('shoplist signup', { email })
@@ -19,12 +19,13 @@ export async function login({ email }, context){
   return await context.queries.auth.getCurrentUser()
 }
 
-export async function loginViaAgent({ email }, context){
+export async function requestLogin({ email }, context){
   validateEmail(email)
-  const enoughToLogin = await jlinx.loginWithAgentEmail(email)
-  console.log({ enoughToLogin })
+  return await jlinxApp.loginWithAgentEmail(email)
+}
 
-  return { enoughToLogin }
+export async function waitForLoginRequestResult({ id }, context){
+  return await jlinxApp.waitForLoginRequestResult(id)
 }
 
 

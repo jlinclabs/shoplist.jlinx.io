@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
@@ -112,31 +112,62 @@ function EmailForm({ disabled, email, setEmail, emailIsJlinxAgent, onSubmit, pen
 
 
 function LoginViaAgent({ disabled, email }) {
-  const domain = email.split('@')[1]
-  const loginCmd = useCommandOnMount(`auth.loginViaAgent`, { email }, {
+  const host = email.split('@')[1]
+  const loginRequest = useCommandOnMount(`auth.requestLogin`, { email }, {
     onSuccess(...args){
-      console.log('onSuccess', args)
+      console.log('auth.requestLogin onSuccess', args)
     },
     onFailure(...args){
-      console.log('onFailure', args)
+      console.log('auth.requestLogin onFailure', args)
     },
     onComplete(...args){
-      console.log('onComplete', args)
+      console.log('auth.requestLogin onComplete', args)
     },
   })
-  console.log({ loginCmd })
+
+  const waitForResult = useCommandOnMount(`auth.waitForLoginRequestResult`, {
+    onSuccess(...args){
+      console.log('auth.waitForResult onSuccess', args)
+    },
+    onFailure(...args){
+      console.log('auth.waitForResult onFailure', args)
+    },
+    onComplete(...args){
+      console.log('auth.waitForResult onComplete', args)
+    },
+  })
+
+  console.log({ loginRequest, waitForResult })
+
+  useEffect(
+    () => {
+      if (loginRequest.resolved){
+        console.log(loginRequest.result)
+        const id = loginRequest.result.loginAttemptId
+        waitForResult.call({ id })
+      }
+    },
+    [loginRequest.resolved]
+  )
   return <Form {...{
     // onSubmit,
     disabled,
   }}>
     <Typography variant="h4" mb={2} align="center">Login via JLINX Agent 🕵</Typography>
-    <ErrorMessage error={loginCmd.error}/>
-    {loginCmd.pending &&
+    <ErrorMessage error={loginRequest.error}/>
+    {loginRequest.pending &&
       <Box align="center">
-        <Typography variant="h6" mb={2}>Contacting your agent at {domain}</Typography>
+        <Typography variant="h6" mb={2}>Contacting your agent at {host}</Typography>
         <CircularProgress />
       </Box>
     }
-    {loginCmd.resolved && <InspectObject object={loginCmd.result}/>}
+    {loginRequest.resolved &&
+      <Box align="center">
+        <Typography variant="h6" mb={2}>Go checking your agent!</Typography>
+        <Typography variant="h6" mb={2}>We've sent a login request to your agent at {host}</Typography>
+        <CircularProgress />
+      </Box>
+    }
+    {loginRequest.resolved && <InspectObject object={loginRequest.result}/>}
   </Form>
 }
