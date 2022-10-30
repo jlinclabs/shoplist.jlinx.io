@@ -33,7 +33,14 @@ export async function completeLoginViaAgent({ host, id }, context) {
   const loginRequest = await jlinxApp.waitForLoginRequestResult({ host, id })
   console.log({ loginRequest })
   if (!loginRequest.accepted) throw new Error(`login request not accepted`)
+  const jlinxAgentDid = loginRequest.did
+  const record = await context.prisma.user.findFirst({
+    where: { jlinxAgentDid },
+    select: { id: true },
+  })
+  if (record) return await context.loginAs(record.id)
   await context.commands.auth._createUser({
+    jlinxAgentHost: host,
     jlinxAgentDid: loginRequest.did,
     displayName: loginRequest.profile?.displayName,
     avatar: loginRequest.profile?.avatar,

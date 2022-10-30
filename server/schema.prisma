@@ -10,16 +10,17 @@ generator client {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  createdAt     DateTime  @default(now())
-  email         String?   @unique
-  passwordSalt  String?
-  passwordHash  String?
-  sessions      Session[]
-  lists         List[]
-  jlinxAgentDid String?
-  displayName   String?
-  avatar        String?
+  id             Int       @id @default(autoincrement())
+  createdAt      DateTime  @default(now())
+  email          String?   @unique
+  passwordSalt   String?
+  passwordHash   String?
+  sessions       Session[]
+  lists          List[]
+  jlinxAgentHost String?
+  jlinxAgentDid  String?   @unique
+  displayName    String?
+  avatar         String?
 }
 
 model Session {
