@@ -125,7 +125,7 @@ function LoginViaAgent({ disabled, email }) {
     },
   })
 
-  const waitForResult = useCommandOnMount(`auth.waitForLoginRequestResult`, {
+  const waitForResult = useCommand(`auth.waitForLoginRequestResult`, {
     onSuccess(...args){
       console.log('auth.waitForResult onSuccess', args)
     },
@@ -144,7 +144,7 @@ function LoginViaAgent({ disabled, email }) {
       if (loginRequest.resolved){
         console.log(loginRequest.result)
         const id = loginRequest.result.loginAttemptId
-        waitForResult.call({ id })
+        waitForResult.call({ host, id })
       }
     },
     [loginRequest.resolved]

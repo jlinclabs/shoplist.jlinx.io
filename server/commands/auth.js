@@ -1,4 +1,3 @@
-import fetch from 'node-fetch'
 import * as auth from 'app-shared/server/commands/auth.js'
 export * from 'app-shared/server/commands/auth.js'
 import { isEmail } from 'app-shared/shared/emails.js'
@@ -24,8 +23,10 @@ export async function requestLogin({ email }, context){
   return await jlinxApp.loginWithAgentEmail(email)
 }
 
-export async function waitForLoginRequestResult({ id }, context){
-  return await jlinxApp.waitForLoginRequestResult(id)
+export async function waitForLoginRequestResult({ host, id }, context){
+  if (!host) throw new InvalidArgumentError('host', host)
+  if (!id) throw new InvalidArgumentError('id', id)
+  return await jlinxApp.waitForLoginRequestResult({ host, id })
 }
 
 
