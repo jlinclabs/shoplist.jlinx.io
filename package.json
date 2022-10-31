@@ -34,7 +34,7 @@
     "@prisma/client": "^4.5.0",
     "@stablelib/ed25519": "^1.0.3",
     "@stablelib/x25519": "^1.0.3",
-    "app-shared": "github:jlinclabs/app-shared#c154ee050da1dc303f142018c494269573db8fde",
+    "app-shared": "github:jlinclabs/app-shared#3fa7ef3cdb4bd25d2c146738c53095d54f42cf42",
     "did-resolver": "^4.0.1",
     "dids": "^3.4.0",
     "dotenv": "^16.0.3",
