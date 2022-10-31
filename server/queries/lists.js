@@ -12,29 +12,32 @@ export const allFields = Object.freeze({
 
 export async function getAll({}, context){
   context.requireLoggedIn('get all lists')
-
   const jlinxAgent = await context.queries.auth._getJlinxAgent()
-
   const records = await context.prisma.list.findMany({
     where: {
       userId: context.userId,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
     select: allFields,
   })
-
   // jlinxApp.
-
-  return records
+  return { lists: records }
 }
 
 export async function getById({ id }, context){
   console.log({ id })
   context.requireLoggedIn(`get list id=${id}`)
-  return await context.prisma.list.findUnique({
+  const record = await context.prisma.list.findUnique({
     where: {
       id,
       // userId: context.userId,
     },
     select: allFields,
   })
+
+  // TODO get latest version from agent
+
+  return record
 }

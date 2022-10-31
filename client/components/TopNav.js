@@ -56,7 +56,7 @@ export default function TopNav({ currentUser }){
             <NavButton to="/about"  value="About"/>
             {currentUser
               ? <>
-                <NavButton to="/lists" value="My Lists"/>
+                {/*<NavButton to="/lists" value="My Lists"/>*/}
                 <NavButton to="/lists/new" value={<PlaylistAddIcon/>}/>
               </>
               : <>

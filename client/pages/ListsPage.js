@@ -84,6 +84,7 @@ function Show({}){
   const { id } = useParams()
   const query = useQuery('lists.getById', { id })
   return <Paper sx={{p: 2, m:2}}>
+    <ErrorMessage error={query.error}/>
     {query.pending && <CircularProgress/>}
     {query.result && <List {...query.result} key={id}/>}
   </Paper>
