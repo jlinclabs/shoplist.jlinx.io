@@ -1,10 +1,10 @@
-import { useRef, useLayoutEffect } from 'react'
-import * as colors from '@mui/material/colors'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
-
 import { useQuery } from 'app-shared/client/hooks/cqrpc'
+import Link from 'app-shared/client/components/Link'
 import LoadingList from 'app-shared/client/components/LoadingList'
 import Timestamp from 'app-shared/client/components/Timestamp'
 
@@ -15,7 +15,15 @@ export default function MyLists({...props}) {
     ...props,
     loading: query.loading,
     error: query.error,
-    emptyMessage: `you dont have any lists`,
+    emptyMessage: <Box>
+      <Typography>you dont have any lists yet :O</Typography>
+      <Button
+        sx={{mt: 2}}
+        variant="contained"
+        component={Link}
+        to="/lists/new"
+      >Create Your First List</Button>
+    </Box>,
     members: lists && lists.map(n => ({
       key: n.id,
       href: `/login-attempts/${n.loginAttemptId}`,

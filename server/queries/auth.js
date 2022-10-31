@@ -21,3 +21,15 @@ export async function getCurrentUser({}, context){
   return currentUser
 }
 
+export async function _getJlinxAgent({}, context) {
+  const record = await context.queries.auth._selectCurrentUser({
+    jlinxAgentHost: true,
+    jlinxAgentDid: true,
+  })
+  if (record.jlinxAgentDid){
+    return {
+      did: record.jlinxAgentDid,
+      host: record.jlinxAgentHost,
+    }
+  }
+}

@@ -48,7 +48,10 @@ function LoggedIn({ currentUser }){
     <Paper sx={{p: 2, m: 2}}>
       <Typography variant="h4">Welcome {currentUser.displayName}</Typography>
     </Paper>
-    <MyLists/>
+    <Paper sx={{p: 2, m: 2}}>
+      <Typography variant="h5">Your Lists:</Typography>
+      <MyLists/>
+    </Paper>
   </Container>
 }
 

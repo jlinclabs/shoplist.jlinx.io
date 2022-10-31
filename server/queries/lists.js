@@ -1,4 +1,4 @@
-import prisma from 'app-shared/server/prisma.js'
+import jlinxApp from '../jlinxApp.js'
 
 export const allFields = Object.freeze({
   id: true,
@@ -8,14 +8,22 @@ export const allFields = Object.freeze({
   jlinxDocumentId: true,
 })
 
+
 export async function getAll({}, context){
   context.requireLoggedIn('get all lists')
-  return await prisma.list.findMany({
+
+  const jlinxAgent = await context.queries.auth._getJlinxAgent()
+
+  const records = await context.prisma.list.findMany({
     where: {
       userId: context.userId,
     },
     select: allFields,
   })
+
+  // jlinxApp.
+
+  return records
 }
 
 export async function getById({ id }, context){
