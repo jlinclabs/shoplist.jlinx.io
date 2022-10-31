@@ -3,15 +3,17 @@ import { allFields } from '../queries/lists.js'
 
 export async function create({ name, value = {} }, context){
   const jlinxAgent = await context.queries.auth._getJlinxAgent()
+  console.log('CREATE LIST', {jlinxAgent})
   let jlinxDocument
   if (jlinxAgent){
-    jlinxDocument = jlinxApp.createDocument({
-      agent: jlinxAgent.did,
+    jlinxDocument = await jlinxApp.createDocument({
+      did: jlinxAgent.did,
       host: jlinxAgent.host,
       name,
       value,
     })
   }
+  console.log({ jlinxDocument })
   const record = await context.prisma.list.create({
     data: {
       userId: context.userId,
@@ -21,15 +23,31 @@ export async function create({ name, value = {} }, context){
     },
     select: allFields
   })
+  console.log('CREATED NEW LIST', record)
   return record
 }
 
-export async function update({ value }, context){
-  return await context.prisma.list.create({
-    data: {
-      userId: context.userId,
+export async function update({ id, value }, context){
+  // TODO Access control
+  const list = await context.queries.lists.getById({ id })
+  const jlinxAgent = await context.queries.auth._getJlinxAgent()
+  console.log('UPODATE LIST', { list, jlinxAgent })
+  let jlinxDocument
+  if (jlinxAgent){
+    jlinxDocument = await jlinxApp.updateDocument({
+      did: jlinxAgent.did,
+      host: jlinxAgent.host,
+      id: list.jlinxDocumentId,
       value,
-    },
+    })
+    value = jlinxDocument.value
+  }
+  console.log({ jlinxDocument })
+  const record = await context.prisma.list.update({
+    where: { id },
+    data: { value },
     select: allFields
   })
+
+  return record
 }

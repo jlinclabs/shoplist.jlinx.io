@@ -8,11 +8,14 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import CircularProgress from '@mui/material/CircularProgress'
 import Paper from '@mui/material/Paper'
+import IconButton from '@mui/material/IconButton'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 import { useQuery, useCommand, useCommandOnMount } from 'app-shared/client/hooks/cqrpc.js'
 import Form from 'app-shared/client/components/Form'
 import ErrorMessage from 'app-shared/client/components/ErrorMessage'
 import ButtonRow from 'app-shared/client/components/ButtonRow'
+import Timestamp from 'app-shared/client/components/Timestamp'
 import InspectObject from 'app-shared/client/components/InspectObject'
 import LogoutButton from 'app-shared/client/components/LogoutButton'
 // import { useCurrentUser } from 'app-shared/client/hooks/auth'
@@ -78,7 +81,93 @@ function New({}){
   </Paper>
 }
 function Show({}){
-  return <Box>
-    Show
+  const { id } = useParams()
+  const query = useQuery('lists.getById', { id })
+  return <Paper sx={{p: 2, m:2}}>
+    {query.pending && <CircularProgress/>}
+    {query.result && <List {...query.result} key={id}/>}
+  </Paper>
+}
+
+function List({ id, name, createdAt, updatedAt, value }) {
+  const [newValue, setNewValue] = useState({...value})
+  const update = useCommand('lists.update')
+  const items = newValue.items || []
+  console.log({ items })
+  const disabled = update.pending
+
+  const onReset = () => {
+    const confirmed = confirm(`are you sure?`)
+    if (!confirmed) return
+    setNewValue({...value})
+  }
+  return <Box {...{
+    component: Form,
+    onSubmit() {
+      update.call({ id, value: newValue })
+    },
+  }}>
+    <Typography variant="h4">{name}</Typography>
+    <Typography variant="body2">
+      Created: <Timestamp at={createdAt}/>
+    </Typography>
+    {updatedAt &&
+      <Typography variant="body2">
+        Updated: <Timestamp at={createdAt}/>
+      </Typography>
+    }
+    <ErrorMessage error={update.error}/>
+    <Stack spacing={2} my={2}>
+      {Array(items.length + 2).fill().map((_, index) =>
+        <ListItem {...{
+          key: index,
+          index,
+          value: items[index],
+          onChange(newItemValue){
+            const newItems = [...items]
+            newItems[index] = newItemValue
+            setNewValue({...newValue, items: newItems})
+          },
+          onDelete(){
+            const confirmed = confirm(`are you sure?`)
+            if (!confirmed) return
+            const newItems = [...items]
+            newItems.splice(index, 1)
+            setNewValue({...newValue, items: newItems})
+          }
+        }} />
+      )}
+    </Stack>
+
+    <ButtonRow>
+      <Button
+        type="submit"
+        variant="contained"
+        disabled={disabled}
+      >Save List</Button>
+      <Button
+        variant="text"
+        disabled={disabled}
+        onClick={onReset}
+      >reset</Button>
+    </ButtonRow>
   </Box>
+}
+
+function ListItem({ index, disabled, value, onChange, onDelete }){
+  return <Stack direction="row" alignItems="center" spacing={2}>
+    <Typography variant="body2">{index + 1}</Typography>
+    <TextField
+      size="small"
+      margin="dense"
+      disabled={disabled}
+      fullWidth
+      type="text"
+      value={value || ''}
+      onChange={e => { onChange(e.target.value) }}
+    />
+    <IconButton onClick={onDelete} tabIndex={-1}>
+      <DeleteForeverIcon/>
+    </IconButton>
+  </Stack>
 }

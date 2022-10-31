@@ -25,11 +25,12 @@ CREATE TABLE "Session" (
 
 -- CreateTable
 CREATE TABLE "List" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" INTEGER NOT NULL,
+    "name" TEXT NOT NULL,
     "value" JSONB NOT NULL,
-    "jlinxDocumentId" TEXT NOT NULL,
+    "jlinxDocumentId" TEXT,
 
     CONSTRAINT "List_pkey" PRIMARY KEY ("id")
 );

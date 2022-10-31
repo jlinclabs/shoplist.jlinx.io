@@ -11,12 +11,16 @@ export async function getCurrentUser({}, context){
   if (!currentUser) return
   console.log({ currentUser })
   if (currentUser.jlinxAgentDid){
-    const profile = await jlinxApp.getAgentProfile({
-      host: currentUser.jlinxAgentHost,
-      did: currentUser.jlinxAgentDid,
-    })
-    currentUser.displayName = profile.displayName
-    currentUser.avatar = profile.avatar
+    try {
+      const profile = await jlinxApp.getAgentProfile({
+        host: currentUser.jlinxAgentHost,
+        did: currentUser.jlinxAgentDid,
+      })
+      currentUser.displayName = profile.displayName
+      currentUser.avatar = profile.avatar
+    }catch(error){
+      console.error(error)
+    }
   }
   return currentUser
 }

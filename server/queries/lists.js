@@ -4,6 +4,7 @@ export const allFields = Object.freeze({
   id: true,
   createdAt: true,
   userId: true,
+  name: true,
   value: true,
   jlinxDocumentId: true,
 })
@@ -29,16 +30,11 @@ export async function getAll({}, context){
 export async function getById({ id }, context){
   console.log({ id })
   context.requireLoggedIn(`get list id=${id}`)
-  if (typeof id !== 'number' || id < 1) return null
-  return await prisma.list.findFirst({
+  return await context.prisma.list.findUnique({
     where: {
       id,
-      userId: context.userId,
+      // userId: context.userId,
     },
-    select: {
-      id: true,
-      createdAt: true,
-      userId: true,
-    },
+    select: allFields,
   })
 }
