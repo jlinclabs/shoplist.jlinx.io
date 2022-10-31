@@ -52,7 +52,11 @@ export default function TopNav({ currentUser }){
             Shop List!
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{
+            flexGrow: 1,
+            display: 'flex',
+            // display: { xs: 'none', md: 'flex' }
+          }}>
             <NavButton to="/about"  value="About"/>
             {currentUser
               ? <>
@@ -114,7 +118,7 @@ function LoggedIn({ currentUser }){
       <Avatar src={currentUser.avatar} />
       <Box>{currentUser.displayName}</Box>
     </Stack>
-    <Tooltip title="Open settings">
+    <Tooltip title="">
       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
         <MenuIcon/>
       </IconButton>
@@ -135,13 +139,13 @@ function LoggedIn({ currentUser }){
       open={Boolean(anchorElUser)}
       onClose={handleCloseUserMenu}
     >
-      <MenuItem
-        component={Link}
-        to="/settings"
-        onClick={handleCloseUserMenu}
-      >
-        <Typography textAlign="center">Settings</Typography>
-      </MenuItem>
+      {/*<MenuItem*/}
+      {/*  component={Link}*/}
+      {/*  to="/settings"*/}
+      {/*  onClick={handleCloseUserMenu}*/}
+      {/*>*/}
+      {/*  <Typography textAlign="center">Settings</Typography>*/}
+      {/*</MenuItem>*/}
       <MenuItem
         component={Link}
         onClick={() => { logout(); handleCloseUserMenu() }}
