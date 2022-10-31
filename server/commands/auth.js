@@ -47,7 +47,6 @@ export async function completeLoginViaAgent({ host, id }, context) {
   })
 }
 
-
 function validateEmail(email){
   if (!isEmail(email)) throw new InvalidArgumentError('email', email)
 }
