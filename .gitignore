@@ -34,3 +34,4 @@ yarn-error.log*
 /server/.prisma
 .proxyrc
 .parcel-cache
+.env.production
