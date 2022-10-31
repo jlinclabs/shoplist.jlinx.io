@@ -1,16 +1,20 @@
 import prisma from 'app-shared/server/prisma.js'
 
+export const allFields = Object.freeze({
+  id: true,
+  createdAt: true,
+  userId: true,
+  value: true,
+  jlinxDocumentId: true,
+})
+
 export async function getAll({}, context){
   context.requireLoggedIn('get all lists')
   return await prisma.list.findMany({
     where: {
       userId: context.userId,
     },
-    select: {
-      id: true,
-      createdAt: true,
-      userId: true,
-    },
+    select: allFields,
   })
 }
 

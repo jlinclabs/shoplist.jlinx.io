@@ -13,7 +13,8 @@ export default function MyLists({...props}) {
   const lists = query.result?.lists || []
   return <LoadingList {...{
     ...props,
-    loading,
+    loading: query.loading,
+    error: query.error,
     emptyMessage: `you dont have any lists`,
     members: lists && lists.map(n => ({
       key: n.id,
