@@ -31,7 +31,6 @@ export async function update({ id, value }, context){
   // TODO Access control
   const list = await context.queries.lists.getById({ id })
   const jlinxAgent = await context.queries.auth._getJlinxAgent()
-  console.log('UPODATE LIST', { list, jlinxAgent })
   let jlinxDocument
   if (jlinxAgent){
     jlinxDocument = await jlinxApp.updateDocument({
@@ -39,15 +38,13 @@ export async function update({ id, value }, context){
       host: jlinxAgent.host,
       id: list.jlinxDocumentId,
       value,
+      name: list.name
     })
     value = jlinxDocument.value
   }
-  console.log({ jlinxDocument })
-  const record = await context.prisma.list.update({
+  return await context.prisma.list.update({
     where: { id },
     data: { value },
     select: allFields
   })
-
-  return record
 }
