@@ -13,6 +13,7 @@ import LogoutButton from 'app-shared/client/components/LogoutButton'
 import ButtonRow from 'app-shared/client/components/ButtonRow'
 
 import AppLogo from '../components/AppLogo.js'
+import MyLists from '../components/MyLists.js'
 
 export default function HomePage(props) {
   return h(props.currentUser ? LoggedIn : LoggedOut, props)
@@ -47,6 +48,7 @@ function LoggedIn({ currentUser }){
     <Paper sx={{p: 2, m: 2}}>
       <Typography variant="h4">Welcome {currentUser.displayName}</Typography>
     </Paper>
+    <MyLists/>
   </Container>
 }
 
