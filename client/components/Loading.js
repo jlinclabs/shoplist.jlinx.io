@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
-import LogoIcon from './AppLogo.js'
+import AppLogo from './AppLogo.js'
 
 export default function FullPageLoading(props){
   if (props.variant === 'fullPage') return (
@@ -15,12 +15,20 @@ export default function FullPageLoading(props){
       }}
     >
       {/*<CircularProgress size={140}/>*/}
-      <LogoIcon sx={{
-        // perspective: 1000,
-        // transform: 'rotateY(180deg)',
+      <AppLogo size="xLarge" sx={{
+        position: 'relative',
         animation: '1s infinite linear flipflop',
         transitionTimingFunction: 'cubic-bezier(.175, .885, .32, 1.275)',
-        transformOrigin: '49px 66px',
+        transformOrigin: '74px 98px',
+        // ':before': {
+        //   position: 'absolute',
+        //   top: '98px',
+        //   left: '74px',
+        //   content: '" "',
+        //   border: '1px solid red',
+        //   height: '1px',
+        //   width: '1px',
+        // },
         '@keyframes flipflop': {
           from: {
             transform: 'rotate(0turn)',
@@ -28,26 +36,6 @@ export default function FullPageLoading(props){
           to: {
             transform: 'rotate(1turn)',
           },
-          // '0%': {
-          //   '--color': 'red',
-          //   transform: 'rotateY(0deg)',
-          // },
-          // '25%': {
-          //   '--color': 'blue',
-          //   transform: 'rotateY(0deg)',
-          // },
-          // '50%': {
-          //   '--color': 'lime',
-          //   transform: 'rotateY(180deg)',
-          // },
-          // '75%': {
-          //   '--color': 'blue',
-          //   transform: 'rotateY(180deg)',
-          // },
-          // '100%': {
-          //   '--color': 'lime',
-          //   transform: 'rotateX(0deg) rotateY(0deg)',
-          // }
         }
       }}/>
     </Box>
