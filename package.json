@@ -60,7 +60,7 @@
     "zustand": "^4.1.4"
   },
   "dependencies": {
-    "app-shared": "github:jlinclabs/app-shared#29f7a2533fc05c413276b130b308b26cdf378505",
+    "app-shared": "github:jlinclabs/app-shared#68d4a3e26bab66b256cfdd5ffb25090e51f71c15",
     "parcel-plugin-svg-react": "^1.0.4"
   }
 }
