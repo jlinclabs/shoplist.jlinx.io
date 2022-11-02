@@ -1,5 +1,5 @@
 {
-  "name": "app-boilerplate",
+  "name": "shoplist",
   "version": "1.0.0",
   "type": "module",
   "description": "",
@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jlinclabs/app-boilerplate.git"
+    "url": "git+https://github.com/jlinclabs/shoplist.git"
   },
   "keywords": [],
   "author": "Jared Grippe",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jlinclabs/app-boilerplate/issues"
+    "url": "https://github.com/jlinclabs/shoplist/issues"
   },
-  "homepage": "https://github.com/jlinclabs/app-boilerplate#readme",
+  "homepage": "https://github.com/jlinclabs/shoplist#readme",
   "peerDependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -60,7 +60,7 @@
     "zustand": "^4.1.4"
   },
   "dependencies": {
-    "app-shared": "github:jlinclabs/app-shared#3fa7ef3cdb4bd25d2c146738c53095d54f42cf42",
+    "app-shared": "github:jlinclabs/app-shared#29f7a2533fc05c413276b130b308b26cdf378505",
     "parcel-plugin-svg-react": "^1.0.4"
   }
 }
