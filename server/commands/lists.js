@@ -29,7 +29,9 @@ export async function create({ name, value = {} }, context){
 
 export async function update({ id, value }, context){
   // TODO Access control
+  console.log('🔥', { id, value })
   const list = await context.queries.lists.getById({ id })
+  console.log('🔥', { list })
   const jlinxAgent = await context.queries.auth._getJlinxAgent()
   let jlinxDocument
   if (jlinxAgent){
