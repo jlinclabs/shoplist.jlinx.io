@@ -42,7 +42,7 @@ function LoggedOut(){
         sx={{
           // backgroundColor: 'rgb(33, 118, 130)', //️'info.dark'
         }}
-      >You own your data</Button>
+      ><b>You</b>&nbsp;own your data</Button>
       <Divider sx={{my: 2}}>OR</Divider>
       <Button
         variant="contained"
@@ -52,7 +52,7 @@ function LoggedOut(){
           // backgroundColor: 'grey'
           opacity: 0.8
         }}
-      >We own your data</Button>
+      ><b>We</b>&nbsp;own your data</Button>
     </Stack>
   </Stack>
 }

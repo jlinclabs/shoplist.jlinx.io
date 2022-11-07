@@ -23,6 +23,17 @@ export async function getAll({}, context){
     select: allFields,
   })
   // jlinxApp.
+
+  // const jlinxDocuments = await jlinxApp.getDocuments({
+  //   did: jlinxAgent.did,
+  //   host: jlinxAgent.host,
+  //   ids: records.map(l => l.jlinxDocumentId),
+  //   // value,
+  //   // name: list.name
+  // })
+  //
+  //
+
   return { lists: records }
 }
 
