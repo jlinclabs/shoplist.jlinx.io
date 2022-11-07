@@ -62,5 +62,8 @@
   "dependencies": {
     "app-shared": "github:jlinclabs/app-shared#76a2703aec660e91eaf73cc8eb17a235fa12071c",
     "parcel-plugin-svg-react": "^1.0.4"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
   }
 }

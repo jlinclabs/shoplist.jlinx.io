@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
+import Divider from '@mui/material/Divider'
 
 import Link from 'app-shared/client/components/Link'
 import InspectObject from 'app-shared/client/components/InspectObject'
@@ -33,13 +34,26 @@ function LoggedOut(){
         `storing all of your data in your personal JLINX Agent Database.`,
       ].map((text, i) => <p key={i}>{text}</p>)}
     </Paper>
-    <Box>
+    <Stack>
+      <Button
+        variant="contained"
+        component={Link}
+        to="/auth?jlinx=1"
+        sx={{
+          // backgroundColor: 'rgb(33, 118, 130)', //️'info.dark'
+        }}
+      >You own your data</Button>
+      <Divider sx={{my: 2}}>OR</Divider>
       <Button
         variant="contained"
         component={Link}
         to="/auth"
-      >Signup and own your data</Button>
-    </Box>
+        sx={{
+          // backgroundColor: 'grey'
+          opacity: 0.8
+        }}
+      >We own your data</Button>
+    </Stack>
   </Stack>
 }
 

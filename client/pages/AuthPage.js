@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Avatar from '@mui/material/Avatar'
+import Divider from '@mui/material/Divider'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import { isEmail } from 'app-shared/shared/emails'
@@ -25,16 +26,16 @@ import InspectObject from 'app-shared/client/components/InspectObject'
 
 export default function AuthPage({...props}) {
   const [search] = useSearchParams()
+  props.choseJlinx = search.get('jlinx') === '1'
   if (props.currentUser) return <RedirectPage to={search.get('d') || "/"}/>
   return <AuthForm {...props}/>
 }
 
 const isJlinxAgentEmail = email =>
   /^[a-zA-Z0-9_-]{32,64}@.+/.test(email)
-  // /[a-zA-Z0-9-_/=+]{64}@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
 
 
-function AuthForm({ currentUser }) {
+function AuthForm({ currentUser, choseJlinx }) {
   const [email, setEmail] = useState('')
   const [loginViaAgent, setLoginViaAgent] = useState(false)
 
@@ -43,36 +44,46 @@ function AuthForm({ currentUser }) {
 
   const emailIsJlinxAgent = isJlinxAgentEmail(email)
 
+  const props = {
+    disabled, email, setEmail, emailIsJlinxAgent,
+    pending: login.pending,
+    error: login.error,
+    onSubmit() {
+      if (emailIsJlinxAgent) setLoginViaAgent(true)
+      else login.call({email: email || undefined})
+    },
+  }
+
   return <Stack p={2} direction="column" alignItems="center">
     <Paper sx={{
       p: 2,
       minWidth: `min(100vw, 500px)`,
       maxWidth: `calc(100vw - 20px)`,
     }}>
-      {loginViaAgent
-        ? <LoginViaAgent {...{disabled, email}}/>
-        : <EmailForm {...{
-          disabled, email, setEmail, emailIsJlinxAgent,
-          pending: login.pending,
-          error: login.error,
-          onSubmit() {
-            if (emailIsJlinxAgent) setLoginViaAgent(true)
-            else login.call({email: email || undefined})
-          }
-        }}/>
+      {
+        choseJlinx ? <OfferJlinx {...props}/> :
+        loginViaAgent ? <LoginViaAgent {...props}/> :
+        <LoginViaEmail {...props}/>
       }
     </Paper>
   </Stack>
 }
 
+const Title = props =>
+  <Typography {...{
+    variant: 'h4', mb: 2, align: 'center', ...props
+  }}/>
 
-function EmailForm({ disabled, email, setEmail, emailIsJlinxAgent, onSubmit, pending, error }){
+function EmailForm({
+  disabled, email, setEmail, emailIsJlinxAgent,
+  onSubmit, pending, error,
+  placeholder,
+}){
   const submittable = !!(email && isEmail(email))
   return <Form {...{
     onSubmit,
     disabled: disabled || !submittable,
   }}>
-    <Typography variant="h4" mb={2} align="center">Signup or Login</Typography>
     <Box>
       <ErrorMessage error={error}/>
       <TextField
@@ -85,6 +96,7 @@ function EmailForm({ disabled, email, setEmail, emailIsJlinxAgent, onSubmit, pen
         name="email"
         type="email"
         value={email}
+        placeholder={placeholder}
         onChange={e => { setEmail(e.target.value) }}
       />
     </Box>
@@ -105,13 +117,57 @@ function EmailForm({ disabled, email, setEmail, emailIsJlinxAgent, onSubmit, pen
       pending
         ? 'WORKING ON IT…'
         : (emailIsJlinxAgent
-          ? 'LOGIN WITH YOU JLINC AGENT 🕵'
+          ? 'LOGIN WITH YOUR JLINC AGENT 🕵'
           : 'EMAIL ME A LOGIN LINK'
         )
     }</Button>
   </Form>
 }
 
+
+function LoginViaEmail({...props}) {
+  return <Box>
+    <Title>Signup or Login</Title>
+    <EmailForm {...{
+      ...props,
+    }}/>
+  </Box>
+}
+
+function OfferJlinx({...props}) {
+  return <Box>
+    <Title>Own your data!</Title>
+    <Typography variant="body1" component="p">
+      When you signup for Shop List using your JLINX Agent:
+    </Typography>
+    <ul>
+      <li>
+        We store all of your data in <b>your</b> personal database
+      </li>
+      <li>
+        You maintain access control rights over your data
+      </li>
+    </ul>
+    <Stack>
+      <Button
+        variant="contained"
+        component={Link}
+        to="https://docs.jlinx.io/federations"
+      >Pick a JLINX Agent Provider</Button>
+    </Stack>
+
+    <Divider sx={{my: 4}}>OR</Divider>
+
+    <Typography variant="body1" component="p">
+      If you already have a JLINX Agent enter your agent email here:
+    </Typography>
+    <EmailForm {...{
+      ...props,
+      emailIsJlinxAgent: true,
+      placeholder: `z6Mkt9ikyXBA3BoidrRzjSMMZdxABfnHaRqFfbVvJzeMc6Un@example.com`
+    }}/>
+  </Box>
+}
 
 function LoginViaAgent({ disabled, email }) {
   const { reload: reloadCurrentUser } = useCurrentUser()
