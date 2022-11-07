@@ -61,8 +61,8 @@ function AuthForm({ currentUser, choseJlinx }) {
       maxWidth: `calc(100vw - 20px)`,
     }}>
       {
-        choseJlinx ? <OfferJlinx {...props}/> :
         loginViaAgent ? <LoginViaAgent {...props}/> :
+        choseJlinx ? <OfferJlinx {...props}/> :
         <LoginViaEmail {...props}/>
       }
     </Paper>
