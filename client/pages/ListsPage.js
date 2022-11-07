@@ -102,6 +102,8 @@ function List({ id, name, createdAt, updatedAt, value }) {
     if (!confirmed) return
     setNewValue({...value})
   }
+  let paddedLength = items.length + 2
+
   return <Box {...{
     component: Form,
     onSubmit() {
@@ -119,10 +121,11 @@ function List({ id, name, createdAt, updatedAt, value }) {
     }
     <ErrorMessage error={update.error}/>
     <Stack spacing={2} my={2}>
-      {Array(items.length + 2).fill().map((_, index) =>
+      {Array(paddedLength).fill().map((_, index) =>
         <ListItem {...{
           key: index,
           index,
+          isExtra: index >= items.length,
           value: items[index],
           onChange(newItemValue){
             const newItems = [...items]
@@ -155,7 +158,7 @@ function List({ id, name, createdAt, updatedAt, value }) {
   </Box>
 }
 
-function ListItem({ index, disabled, value, onChange, onDelete }){
+function ListItem({ index, isExtra, disabled, value, onChange, onDelete }){
   return <Stack direction="row" alignItems="center" spacing={2}>
     <Typography variant="body2">{index + 1}</Typography>
     <TextField
@@ -167,7 +170,11 @@ function ListItem({ index, disabled, value, onChange, onDelete }){
       value={value || ''}
       onChange={e => { onChange(e.target.value) }}
     />
-    <IconButton onClick={onDelete} tabIndex={-1}>
+    <IconButton
+      onClick={onDelete}
+      tabIndex={-1}
+      disabled={isExtra && (typeof value !== 'string' || value === '')}
+    >
       <DeleteForeverIcon/>
     </IconButton>
   </Stack>
