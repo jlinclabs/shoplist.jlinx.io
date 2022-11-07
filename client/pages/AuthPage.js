@@ -77,7 +77,7 @@ const Title = props =>
 function EmailForm({
   disabled, email, setEmail, emailIsJlinxAgent,
   onSubmit, pending, error,
-  placeholder,
+  label, placeholder,
 }){
   const submittable = !!(email && isEmail(email))
   return <Form {...{
@@ -88,7 +88,7 @@ function EmailForm({
       <ErrorMessage error={error}/>
       <TextField
         autoFocus
-        label="email"
+        label={label || 'email'}
         autoComplete="email"
         disabled={disabled}
         margin="normal"
@@ -112,6 +112,13 @@ function EmailForm({
             ? 'rgb(33, 118, 130)' //️'info.dark'
             : 'success.main'
         ),
+        ':hover': {
+          backgroundColor: (
+            emailIsJlinxAgent
+              ? 'rgb(17, 90, 100)' //️'info.dark'
+              : 'success.dark'
+          ),
+        }
       }}
     >{
       pending
@@ -164,7 +171,8 @@ function OfferJlinx({...props}) {
     <EmailForm {...{
       ...props,
       emailIsJlinxAgent: true,
-      placeholder: `z6Mkt9ikyXBA3BoidrRzjSMMZdxABfnHaRqFfbVvJzeMc6Un@example.com`
+      label: 'Agent Email',
+      placeholder: `zFaK3Pr1vAtK3y…5uP3rS3cUre@example.com`
     }}/>
   </Box>
 }
