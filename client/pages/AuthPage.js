@@ -152,7 +152,7 @@ function OfferJlinx({...props}) {
       <Button
         variant="contained"
         component={Link}
-        to="https://docs.jlinx.io/federations"
+        to="https://docs.jlinx.io/docs/federations"
       >Pick a JLINX Agent Provider</Button>
     </Stack>
 
